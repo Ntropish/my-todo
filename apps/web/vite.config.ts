@@ -23,4 +23,13 @@ export default defineConfig({
       '@workspace/ui': resolve(__dirname, '../../packages/ui/src'),
     },
   },
+  server: {
+    port: 5173,
+    proxy: {
+      '^/(todos|users)': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
+    },
+  },
 })
