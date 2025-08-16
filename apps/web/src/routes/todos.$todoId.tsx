@@ -6,7 +6,7 @@ export const Route = createFileRoute('/todos/$todoId')({
   loader: ({ context, params }) =>
     context.queryClient.ensureQueryData({
       queryKey: ['todo', params.todoId],
-      queryFn: () => fetchJSON<Todo>(`/todos/${params.todoId}`),
+      queryFn: () => fetchJSON<Todo>(`/api/todos/${params.todoId}`),
     }),
   component: TodoDetailPage,
 })
@@ -39,7 +39,7 @@ function TodoDetailPage() {
 
   const { data: todo } = useQuery({
     queryKey: ['todo', id],
-    queryFn: () => fetchJSON<Todo>(`/todos/${id}`),
+    queryFn: () => fetchJSON<Todo>(`/api/todos/${id}`),
   })
 
   const updateMutation = useMutation({

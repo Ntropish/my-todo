@@ -34,12 +34,12 @@ function TodosPage() {
     error,
   } = useQuery<Todo[]>({
     queryKey: ['todos'],
-    queryFn: () => fetchJSON<Todo[]>('/todos'),
+    queryFn: () => fetchJSON<Todo[]>('/api/todos'),
   })
 
   const createMutation = useMutation({
     mutationFn: (input: { title: string; completed?: boolean }) =>
-      fetchJSON<Todo>('/todos', {
+      fetchJSON<Todo>('/api/todos', {
         method: 'POST',
         body: JSON.stringify(input),
       }),
@@ -51,7 +51,7 @@ function TodosPage() {
       id: number
       patch: Partial<Pick<Todo, 'title' | 'completed'>>
     }) =>
-      fetchJSON<Todo>(`/todos/${input.id}`, {
+      fetchJSON<Todo>(`/api/todos/${input.id}`, {
         method: 'PUT',
         body: JSON.stringify(input.patch),
       }),
@@ -74,7 +74,7 @@ function TodosPage() {
 
   const deleteMutation = useMutation({
     mutationFn: (id: number) =>
-      fetchJSON<{ message: string }>(`/todos/${id}`, { method: 'DELETE' }),
+      fetchJSON<{ message: string }>(`/api/todos/${id}`, { method: 'DELETE' }),
     onMutate: async (id) => {
       await qc.cancelQueries({ queryKey: ['todos'] })
       const prev = qc.getQueryData<Todo[]>(['todos'])
