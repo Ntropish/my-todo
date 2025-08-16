@@ -4,8 +4,6 @@ import UserRouter from "./users/router";
 import TodoRouter from "./todos/router";
 import z from "zod";
 
-// const PORT = process.env.PORT ? Number(process.env.PORT) : 8080;
-
 const port = z.coerce.number().parse(process.env.PORT ?? 8080);
 
 export const logger: MiddlewareHandler = async (c, next) => {
