@@ -1,11 +1,21 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import logo from '../logo.svg'
 
 export const Route = createFileRoute('/')({
   component: App,
+  loader: () => {
+    throw redirect({
+      to: '/todos',
+      replace: true,
+    })
+  },
 })
 
 function App() {
+  redirect({
+    to: '/todos',
+    replace: true,
+  })
   return (
     <div className="text-center">
       <header className="min-h-screen flex flex-col items-center justify-center bg-[#282c34] text-white text-[calc(10px+2vmin)]">

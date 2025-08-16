@@ -83,9 +83,6 @@ function TodosPage() {
     <div className="max-w-3xl mx-auto p-6 space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Todos</h1>
-        <Link to="/" className="text-blue-600 underline">
-          Home
-        </Link>
       </div>
 
       <form
