@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Button } from '@/components/ui/button'
 import type { Todo } from '@/lib/api'
@@ -41,9 +41,9 @@ function TodoDetailPage() {
     <div className="max-w-xl mx-auto p-6 space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Todo #{todo.id}</h1>
-        <a href="/todos" className="underline text-blue-600">
+        <Link to="/todos" className="underline text-blue-600">
           Back to list
-        </a>
+        </Link>
       </div>
 
       <div className="space-y-4 rounded border p-4">

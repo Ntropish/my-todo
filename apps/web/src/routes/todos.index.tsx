@@ -1,21 +1,13 @@
-import { createFileRoute, Link, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import type { Todo } from '@/lib/api'
 import { fetchJSON } from '@/lib/api'
 
-export const Route = createFileRoute('/todos')({
-  component: TodosLayout,
+export const Route = createFileRoute('/todos/')({
+  component: TodosPage,
 })
-
-function TodosLayout() {
-  return (
-    <div className="min-h-screen">
-      <Outlet />
-    </div>
-  )
-}
 
 function TodosPage() {
   const qc = useQueryClient()
