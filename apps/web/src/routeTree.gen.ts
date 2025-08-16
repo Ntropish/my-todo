@@ -9,25 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TodosRouteImport } from './routes/todos'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as TodosTodoIdRouteImport } from './routes/todos.$todoId'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo.tanstack-query'
 
-const TodosRoute = TodosRouteImport.update({
-  id: '/todos',
-  path: '/todos',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const TodosTodoIdRoute = TodosTodoIdRouteImport.update({
-  id: '/$todoId',
-  path: '/$todoId',
-  getParentRoute: () => TodosRoute,
 } as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   id: '/demo/tanstack-query',
@@ -37,59 +25,38 @@ const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/todos': typeof TodosRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/todos/$todoId': typeof TodosTodoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/todos': typeof TodosRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/todos/$todoId': typeof TodosTodoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/todos': typeof TodosRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/todos/$todoId': typeof TodosTodoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/todos' | '/demo/tanstack-query' | '/todos/$todoId'
+  fullPaths: '/' | '/demo/tanstack-query'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/todos' | '/demo/tanstack-query' | '/todos/$todoId'
-  id: '__root__' | '/' | '/todos' | '/demo/tanstack-query' | '/todos/$todoId'
+  to: '/' | '/demo/tanstack-query'
+  id: '__root__' | '/' | '/demo/tanstack-query'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  TodosRoute: typeof TodosRouteWithChildren
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/todos': {
-      id: '/todos'
-      path: '/todos'
-      fullPath: '/todos'
-      preLoaderRoute: typeof TodosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/todos/$todoId': {
-      id: '/todos/$todoId'
-      path: '/$todoId'
-      fullPath: '/todos/$todoId'
-      preLoaderRoute: typeof TodosTodoIdRouteImport
-      parentRoute: typeof TodosRoute
     }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
@@ -101,19 +68,8 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface TodosRouteChildren {
-  TodosTodoIdRoute: typeof TodosTodoIdRoute
-}
-
-const TodosRouteChildren: TodosRouteChildren = {
-  TodosTodoIdRoute: TodosTodoIdRoute,
-}
-
-const TodosRouteWithChildren = TodosRoute._addFileChildren(TodosRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  TodosRoute: TodosRouteWithChildren,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
 }
 export const routeTree = rootRouteImport
