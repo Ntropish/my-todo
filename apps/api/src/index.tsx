@@ -2,6 +2,11 @@ import { createApp } from "@reono/node-server";
 import { type MiddlewareHandler } from "reono";
 import UserRouter from "./users/router";
 import TodoRouter from "./todos/router";
+import z from "zod";
+
+// const PORT = process.env.PORT ? Number(process.env.PORT) : 8080;
+
+const port = z.coerce.number().parse(process.env.PORT ?? 8080);
 
 export const logger: MiddlewareHandler = async (c, next) => {
   const start = Date.now();
@@ -22,6 +27,6 @@ const app = createApp();
 
 app.serve(<App />);
 
-app.listen(8080, () => {
-  console.log("Server is running on http://localhost:8080");
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
