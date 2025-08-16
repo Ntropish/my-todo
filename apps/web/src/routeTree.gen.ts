@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TodosRouteImport } from './routes/todos'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TodosTodoIdRouteImport } from './routes/todos.$todoId'
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo.tanstack-query'
 
 const TodosRoute = TodosRouteImport.update({
   id: '/todos',
@@ -29,43 +28,34 @@ const TodosTodoIdRoute = TodosTodoIdRouteImport.update({
   path: '/$todoId',
   getParentRoute: () => TodosRoute,
 } as any)
-const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/todos': typeof TodosRouteWithChildren
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/todos/$todoId': typeof TodosTodoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/todos': typeof TodosRouteWithChildren
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/todos/$todoId': typeof TodosTodoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/todos': typeof TodosRouteWithChildren
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/todos/$todoId': typeof TodosTodoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/todos' | '/demo/tanstack-query' | '/todos/$todoId'
+  fullPaths: '/' | '/todos' | '/todos/$todoId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/todos' | '/demo/tanstack-query' | '/todos/$todoId'
-  id: '__root__' | '/' | '/todos' | '/demo/tanstack-query' | '/todos/$todoId'
+  to: '/' | '/todos' | '/todos/$todoId'
+  id: '__root__' | '/' | '/todos' | '/todos/$todoId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TodosRoute: typeof TodosRouteWithChildren
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -91,13 +81,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TodosTodoIdRouteImport
       parentRoute: typeof TodosRoute
     }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -114,7 +97,6 @@ const TodosRouteWithChildren = TodosRoute._addFileChildren(TodosRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TodosRoute: TodosRouteWithChildren,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
