@@ -105,6 +105,13 @@ Prereqs: Node 18+ and PNPM installed. From the repo root:
 - Run (Option C: build then run)
   - Add a bundler (e.g., `tsup`), build to `dist`, then `node dist/index.js`.
 
+- Run (Option D: vite build/watch + wait-on + nodemon) [current setup]
+  - Scripts:
+    - `dev`: `run-p dev:build dev:serve`
+    - `dev:build`: `vite build --watch`
+    - `dev:serve`: `wait-on dist/index.js && nodemon --watch dist --ext js,json --delay 100ms --exec node dist/index.js`
+  - This avoids a race where nodemon would start before the initial build output exists by waiting for `dist/index.js` to appear once, then handing off to nodemon which watches for subsequent rebuilds.
+
 Note: `tsconfig.json` sets `jsxImportSource: reono` and `jsx: react-jsx` so the Reono JSX router compiles correctly.
 
 ## Adding a new domain

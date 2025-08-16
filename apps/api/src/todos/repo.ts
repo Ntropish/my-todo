@@ -4,6 +4,7 @@ const todos: Record<number, { id: number; title: string; completed: boolean }> =
   {
     1: { id: 1, title: "Buy milk", completed: false },
     2: { id: 2, title: "Walk the dog", completed: true },
+    3: { id: 3, title: "Walk the other dog", completed: true },
   };
 
 let nextId = 3;
