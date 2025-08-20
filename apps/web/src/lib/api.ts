@@ -1,5 +1,3 @@
-export type Todo = { id: number; title: string; completed: boolean }
-
 export async function fetchJSON<T>(
   input: RequestInfo,
   init?: RequestInit,

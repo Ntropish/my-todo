@@ -1,2 +1,5 @@
 export { Api } from "./server";
-export { rest } from "../generated/rest";
+export { createRest, rest, type RouteDefinitions } from "./generated/rest";
+
+export * from "./todos/repo";
+export * from "./users/repo";

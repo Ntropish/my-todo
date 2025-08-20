@@ -5,6 +5,11 @@ import { reonoClient } from "@reono/client";
 
 export default defineConfig({
   build: {
+    // Only used with `vite build --watch`
+    // Exclude generated outputs and build artifacts from triggering rebuilds
+    watch: {
+      exclude: ["src/generated/**", "dist/**"],
+    },
     lib: {
       entry: "src/index.tsx",
       name: "reono-todo-api",

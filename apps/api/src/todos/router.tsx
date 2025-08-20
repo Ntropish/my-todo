@@ -2,11 +2,13 @@ import { z } from "zod";
 import {
   getAllTodos,
   getTodo,
-  createTodo,
-  updateTodo,
+  postTodo,
+  patchTodo,
+  putTodo,
   deleteTodo,
   todoCreateSchema,
   todoUpdateSchema,
+  todoPatchSchema,
 } from "./repo";
 
 export const TodoRouter = () => {
@@ -21,7 +23,7 @@ export const TodoRouter = () => {
       <post
         path=""
         validate={{ body: todoCreateSchema }}
-        handler={(c) => createTodo(c.body)}
+        handler={(c) => postTodo(c.body)}
       />
       <put
         path=":todoId"
@@ -29,7 +31,24 @@ export const TodoRouter = () => {
           body: todoUpdateSchema,
           params: z.object({ todoId: z.coerce.number() }),
         }}
-        handler={(c) => updateTodo(c.params.todoId, c.body)}
+        handler={(c) => putTodo(c.params.todoId, c.body)}
+      />
+      <patch
+        path=":todoId"
+        validate={{
+          body: todoPatchSchema,
+          params: z.object({ todoId: z.coerce.number() }),
+        }}
+        // handler={(c) => patchTodo(c.params.todoId, c.body)}
+        // throw error for debugging
+        handler={(c) => {
+          throw new HTTPException.internalServerError({
+            message: "Debugging patchTodo",
+          });
+        }}
+        // handler={(c) => {
+        //   throw new Error("Debugging patchTodo");
+        // }}
       />
       <delete
         path=":todoId"

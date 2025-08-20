@@ -18,7 +18,7 @@ export const userInputSchema = userSchema.omit({ id: true });
 
 export type UserInput = z.infer<typeof userInputSchema>;
 
-export const updateUser = (id: number, data: UserInput) => {
+export const putUser = (id: number, data: UserInput) => {
   if (!users[id]) {
     throw new Error(`User with id ${id} not found`);
   }
@@ -47,7 +47,7 @@ export const deleteUser = (id: number) => {
   return { message: `User with id ${id} deleted` };
 };
 
-export const createUser = (input: UserInput) => {
+export const postUser = (input: UserInput) => {
   const newUser = { id: nextId++, ...input };
   users[newUser.id] = newUser;
   return newUser;

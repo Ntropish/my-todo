@@ -10,5 +10,5 @@
     "moduleResolution": "Bundler"
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "src/generated/**/*.{ts,tsx}"]
+  "exclude": ["node_modules", "generated", "dist"]
 }

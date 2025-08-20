@@ -1,10 +1,10 @@
 import { z } from "zod";
 import {
   getUser,
-  updateUser,
+  putUser,
   getAllUsers,
   deleteUser,
-  createUser,
+  postUser,
   userInputSchema,
 } from "./repo";
 
@@ -23,7 +23,7 @@ export const UserRouter = () => {
           body: userInputSchema,
           params: z.object({ userId: z.coerce.number() }),
         }}
-        handler={(c) => updateUser(c.params.userId, c.body)}
+        handler={(c) => putUser(c.params.userId, c.body)}
       />
       <delete
         path=":userId"
@@ -33,7 +33,7 @@ export const UserRouter = () => {
       <post
         path=""
         validate={{ body: userInputSchema }}
-        handler={(c) => createUser(c.body)}
+        handler={(c) => postUser(c.body)}
       />
     </router>
   );

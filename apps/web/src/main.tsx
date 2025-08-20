@@ -9,7 +9,7 @@ import { routeTree } from './routeTree.gen'
 
 import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
-
+import { ThemeProvider } from '@/components/theme-provider'
 // Create a new router instance
 
 const TanStackQueryProviderContext = TanStackQueryProvider.getContext()
@@ -38,7 +38,9 @@ if (rootElement && !rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <TanStackQueryProvider.Provider {...TanStackQueryProviderContext}>
-        <RouterProvider router={router} />
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <RouterProvider router={router} />
+        </ThemeProvider>
       </TanStackQueryProvider.Provider>
     </StrictMode>,
   )

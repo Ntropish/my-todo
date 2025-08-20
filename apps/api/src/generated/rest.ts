@@ -31,17 +31,17 @@ export interface RouteDefinitions {
     "/todos": {
       params: never;
       body: never;
-      response: any;
+      response: Array<{ id: number; title: string; completed: boolean }>;
     },
     "/todos/:todoId": {
       params: { todoId: string | number };
       body: never;
-      response: any;
+      response: { id: number; title: string; completed: boolean };
     },
     "/:todoId": {
       params: { todoId: string | number };
       body: never;
-      response: any;
+      response: { id: number; title: string; completed: boolean };
     }
   },
   PUT: {
@@ -58,12 +58,12 @@ export interface RouteDefinitions {
     "/todos/:todoId": {
       params: { todoId: string | number };
       body: ZodInfer<typeof Schema_1.todoUpdateSchema>;
-      response: any;
+      response: { id: number; title: string; completed: boolean };
     },
     "/:todoId": {
       params: { todoId: string | number };
       body: ZodInfer<typeof Schema_1.todoUpdateSchema>;
-      response: any;
+      response: { id: number; title: string; completed: boolean };
     }
   },
   DELETE: {
@@ -80,12 +80,12 @@ export interface RouteDefinitions {
     "/todos/:todoId": {
       params: { todoId: string | number };
       body: never;
-      response: any;
+      response: { message: string };
     },
     "/:todoId": {
       params: { todoId: string | number };
       body: never;
-      response: any;
+      response: { message: string };
     }
   },
   POST: {
@@ -102,6 +102,18 @@ export interface RouteDefinitions {
     "/todos": {
       params: never;
       body: ZodInfer<typeof Schema_1.todoCreateSchema>;
+      response: { id: number; title: string; completed: boolean };
+    }
+  },
+  PATCH: {
+    "/todos/:todoId": {
+      params: { todoId: string | number };
+      body: ZodInfer<typeof Schema_1.todoPatchSchema>;
+      response: any;
+    },
+    "/:todoId": {
+      params: { todoId: string | number };
+      body: ZodInfer<typeof Schema_1.todoPatchSchema>;
       response: any;
     }
   }
@@ -112,9 +124,10 @@ export type GETPaths = '/users' | '/users/:userId' | '/' | '/:userId' | '/todos'
 export type PUTPaths = '/users/:userId' | '/:userId' | '/todos/:todoId' | '/:todoId';
 export type DELETEPaths = '/users/:userId' | '/:userId' | '/todos/:todoId' | '/:todoId';
 export type POSTPaths = '/users' | '/' | '/todos';
+export type PATCHPaths = '/todos/:todoId' | '/:todoId';
 
 // Union type of all valid paths
-export type ValidPaths = '/users' | '/users/:userId' | '/users/:userId' | '/users/:userId' | '/users' | '/' | '/:userId' | '/:userId' | '/:userId' | '/' | '/todos' | '/todos/:todoId' | '/todos' | '/todos/:todoId' | '/todos/:todoId' | '/:todoId' | '/:todoId' | '/:todoId';
+export type ValidPaths = '/users' | '/users/:userId' | '/users/:userId' | '/users/:userId' | '/users' | '/' | '/:userId' | '/:userId' | '/:userId' | '/' | '/todos' | '/todos/:todoId' | '/todos' | '/todos/:todoId' | '/todos/:todoId' | '/todos/:todoId' | '/:todoId' | '/:todoId' | '/:todoId' | '/:todoId';
 
 export type PathParams<T extends ValidPaths> = T extends keyof PathParamMap 
   ? PathParamMap[T] 
@@ -165,11 +178,15 @@ export interface GeneratedApiClient {
     ? [path: TPath, options: OptionsFor<'POST', TPath>]
     : [path: TPath, options?: Omit<ClientRequestOptions, 'params' | 'body'>]
   ): Promise<ResponseFor<'POST', TPath>>;
+  patch<TPath extends PATCHPaths>(...args: RequiresOptions<'PATCH', TPath> extends true
+    ? [path: TPath, options: OptionsFor<'PATCH', TPath>]
+    : [path: TPath, options?: Omit<ClientRequestOptions, 'params' | 'body'>]
+  ): Promise<ResponseFor<'PATCH', TPath>>;
 }
 
 // Create the typed client
 function createTypedClient(options: CreateClientOptions = {}): GeneratedApiClient {
-  const client = createClient({ baseUrl: 'http://localhost:8082', ...options });
+  const client = createClient({ baseUrl: '/api', ...options });
 
   const get: GeneratedApiClient["get"] = ((...args: any[]) => {
       const [path, options] = args as [any, any];
@@ -217,11 +234,21 @@ function createTypedClient(options: CreateClientOptions = {}): GeneratedApiClien
       }
     }) as any;
 
+  const patch: GeneratedApiClient["patch"] = ((...args: any[]) => {
+      const [path, options] = args as [any, any];
+      switch (path) {
+      case '/todos/:todoId': return client.patch(path, options) as Promise<ResponseFor<'PATCH', '/todos/:todoId'>>;
+      case '/:todoId': return client.patch(path, options) as Promise<ResponseFor<'PATCH', '/:todoId'>>;
+        default: throw new Error(`Invalid path for PATCH: ${path}`);
+      }
+    }) as any;
+
   return {
     get,
     put,
     delete: del,
-    post
+    post,
+    patch
   } as GeneratedApiClient;
 }
 
