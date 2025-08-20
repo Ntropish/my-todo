@@ -1,2 +1,2 @@
-export { App } from "./app.server";
-export { api } from "./generated/api";
+export { Api } from "./server";
+export { rest } from "../generated/rest";

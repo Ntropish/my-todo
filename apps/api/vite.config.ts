@@ -27,9 +27,9 @@ export default defineConfig({
   plugins: [
     dts(),
     reonoClient({
-      serverFile: "./src/app.server.tsx",
-      outputDir: "./src/generated",
-      clientName: "api",
+      serverFile: "./src/server.tsx",
+      outputDir: "./generated",
+      clientName: "rest",
       baseUrl: "http://localhost:8082",
     }),
   ],

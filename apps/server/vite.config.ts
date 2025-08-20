@@ -7,7 +7,7 @@ export default defineConfig({
     ssr: true,
     lib: {
       entry: "src/index.tsx",
-      name: "reono-todo-api",
+      name: "reono-todo-server",
       fileName: "index",
       formats: ["es", "cjs"],
     },

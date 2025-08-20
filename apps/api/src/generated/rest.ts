@@ -226,7 +226,7 @@ function createTypedClient(options: CreateClientOptions = {}): GeneratedApiClien
 }
 
 // Export the client instance
-export const api = createTypedClient();
+export const rest = createTypedClient();
 
 // Export the client factory for custom configuration
-export { createTypedClient as createApi };
+export { createTypedClient as createRest };

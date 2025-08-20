@@ -9,7 +9,7 @@ export const logger: MiddlewareHandler = async (c, next) => {
   console.log(`${c.req.method} ${c.req.url} (${duration}ms)`);
 };
 
-export const App = () => {
+export const Api = () => {
   return (
     <use handler={logger}>
       <UserRouter />
@@ -18,4 +18,4 @@ export const App = () => {
   );
 };
 
-export default App;
+export default Api;
