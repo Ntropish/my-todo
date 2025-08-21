@@ -51,7 +51,6 @@ function TodosPage() {
       router.invalidate()
       toast.success('Todo created')
     },
-    onError: () => toast.error('Failed to create todo'),
   })
 
   const patchMutation = useMutation({
@@ -66,7 +65,6 @@ function TodosPage() {
       router.invalidate()
       toast.success('Todo updated')
     },
-    onError: () => toast.error('Failed to update todo'),
   })
 
   const deleteMutation = useMutation({
@@ -81,7 +79,6 @@ function TodosPage() {
       router.invalidate()
       toast.success('Todo deleted')
     },
-    onError: () => toast.error('Failed to delete todo'),
   })
 
   const [title, setTitle] = useState('')

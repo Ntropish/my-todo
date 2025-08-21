@@ -11,6 +11,8 @@ import {
   todoPatchSchema,
 } from "./repo";
 
+import { HTTPException } from "reono";
+
 export const TodoRouter = () => {
   return (
     <router path="todos">
@@ -39,16 +41,9 @@ export const TodoRouter = () => {
           body: todoPatchSchema,
           params: z.object({ todoId: z.coerce.number() }),
         }}
-        // handler={(c) => patchTodo(c.params.todoId, c.body)}
-        // throw error for debugging
         handler={(c) => {
-          throw new HTTPException.internalServerError({
-            message: "Debugging patchTodo",
-          });
+          return patchTodo(c.params.todoId, c.body);
         }}
-        // handler={(c) => {
-        //   throw new Error("Debugging patchTodo");
-        // }}
       />
       <delete
         path=":todoId"

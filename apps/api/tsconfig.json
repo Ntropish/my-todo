@@ -6,8 +6,7 @@
     "jsxImportSource": "reono",
     "paths": {
       "@/*": ["./*"]
-    },
-    "moduleResolution": "Bundler"
+    }
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "generated", "dist"]

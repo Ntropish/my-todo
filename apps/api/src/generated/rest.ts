@@ -2,32 +2,12 @@
 import { createClient, type ClientRequestOptions, type CreateClientOptions } from '@reono/client/runtime';
 
 import type { infer as ZodInfer } from 'zod';
-import type * as Schema_0 from '../users/repo.ts';
-import type * as Schema_1 from '../todos/repo.ts';
+import type * as Schema_0 from '../todos/repo.ts';
+import type * as Schema_1 from '../users/repo.ts';
 
 // Route type definitions grouped by HTTP method
 export interface RouteDefinitions {
   GET: {
-    "/users": {
-      params: never;
-      body: never;
-      response: Array<{ id: number; name: string }>;
-    },
-    "/users/:userId": {
-      params: { userId: string | number };
-      body: never;
-      response: { id: number; name: string };
-    },
-    "/": {
-      params: never;
-      body: never;
-      response: Array<{ id: number; name: string }>;
-    },
-    "/:userId": {
-      params: { userId: string | number };
-      body: never;
-      response: { id: number; name: string };
-    },
     "/todos": {
       params: never;
       body: never;
@@ -38,106 +18,126 @@ export interface RouteDefinitions {
       body: never;
       response: { id: number; title: string; completed: boolean };
     },
+    "/": {
+      params: never;
+      body: never;
+      response: Array<{ id: number; title: string; completed: boolean }>;
+    },
     "/:todoId": {
       params: { todoId: string | number };
       body: never;
       response: { id: number; title: string; completed: boolean };
-    }
-  },
-  PUT: {
+    },
+    "/users": {
+      params: never;
+      body: never;
+      response: Array<{ id: number; name: string }>;
+    },
     "/users/:userId": {
       params: { userId: string | number };
-      body: ZodInfer<typeof Schema_0.userInputSchema>;
+      body: never;
       response: { id: number; name: string };
     },
     "/:userId": {
       params: { userId: string | number };
-      body: ZodInfer<typeof Schema_0.userInputSchema>;
+      body: never;
       response: { id: number; name: string };
-    },
-    "/todos/:todoId": {
-      params: { todoId: string | number };
-      body: ZodInfer<typeof Schema_1.todoUpdateSchema>;
-      response: { id: number; title: string; completed: boolean };
-    },
-    "/:todoId": {
-      params: { todoId: string | number };
-      body: ZodInfer<typeof Schema_1.todoUpdateSchema>;
-      response: { id: number; title: string; completed: boolean };
-    }
-  },
-  DELETE: {
-    "/users/:userId": {
-      params: { userId: string | number };
-      body: never;
-      response: { message: string };
-    },
-    "/:userId": {
-      params: { userId: string | number };
-      body: never;
-      response: { message: string };
-    },
-    "/todos/:todoId": {
-      params: { todoId: string | number };
-      body: never;
-      response: { message: string };
-    },
-    "/:todoId": {
-      params: { todoId: string | number };
-      body: never;
-      response: { message: string };
     }
   },
   POST: {
-    "/users": {
+    "/todos": {
       params: never;
-      body: ZodInfer<typeof Schema_0.userInputSchema>;
-      response: { id: number; name: string };
+      body: ZodInfer<typeof Schema_0.todoCreateSchema>;
+      response: { id: number; title: string; completed: boolean };
     },
     "/": {
       params: never;
-      body: ZodInfer<typeof Schema_0.userInputSchema>;
+      body: ZodInfer<typeof Schema_0.todoCreateSchema>;
+      response: { id: number; title: string; completed: boolean };
+    },
+    "/users": {
+      params: never;
+      body: ZodInfer<typeof Schema_1.userInputSchema>;
+      response: { id: number; name: string };
+    }
+  },
+  PUT: {
+    "/todos/:todoId": {
+      params: { todoId: string | number };
+      body: ZodInfer<typeof Schema_0.todoUpdateSchema>;
+      response: { id: number; title: string; completed: boolean };
+    },
+    "/:todoId": {
+      params: { todoId: string | number };
+      body: ZodInfer<typeof Schema_0.todoUpdateSchema>;
+      response: { id: number; title: string; completed: boolean };
+    },
+    "/users/:userId": {
+      params: { userId: string | number };
+      body: ZodInfer<typeof Schema_1.userInputSchema>;
       response: { id: number; name: string };
     },
-    "/todos": {
-      params: never;
-      body: ZodInfer<typeof Schema_1.todoCreateSchema>;
-      response: { id: number; title: string; completed: boolean };
+    "/:userId": {
+      params: { userId: string | number };
+      body: ZodInfer<typeof Schema_1.userInputSchema>;
+      response: { id: number; name: string };
     }
   },
   PATCH: {
     "/todos/:todoId": {
       params: { todoId: string | number };
-      body: ZodInfer<typeof Schema_1.todoPatchSchema>;
-      response: any;
+      body: ZodInfer<typeof Schema_0.todoPatchSchema>;
+      response: { id: number; title: string; completed: boolean };
     },
     "/:todoId": {
       params: { todoId: string | number };
-      body: ZodInfer<typeof Schema_1.todoPatchSchema>;
-      response: any;
+      body: ZodInfer<typeof Schema_0.todoPatchSchema>;
+      response: { id: number; title: string; completed: boolean };
+    }
+  },
+  DELETE: {
+    "/todos/:todoId": {
+      params: { todoId: string | number };
+      body: never;
+      response: { message: string };
+    },
+    "/:todoId": {
+      params: { todoId: string | number };
+      body: never;
+      response: { message: string };
+    },
+    "/users/:userId": {
+      params: { userId: string | number };
+      body: never;
+      response: { message: string };
+    },
+    "/:userId": {
+      params: { userId: string | number };
+      body: never;
+      response: { message: string };
     }
   }
 }
 
 // Method-specific path types
-export type GETPaths = '/users' | '/users/:userId' | '/' | '/:userId' | '/todos' | '/todos/:todoId' | '/:todoId';
-export type PUTPaths = '/users/:userId' | '/:userId' | '/todos/:todoId' | '/:todoId';
-export type DELETEPaths = '/users/:userId' | '/:userId' | '/todos/:todoId' | '/:todoId';
-export type POSTPaths = '/users' | '/' | '/todos';
+export type GETPaths = '/todos' | '/todos/:todoId' | '/' | '/:todoId' | '/users' | '/users/:userId' | '/:userId';
+export type POSTPaths = '/todos' | '/' | '/users';
+export type PUTPaths = '/todos/:todoId' | '/:todoId' | '/users/:userId' | '/:userId';
 export type PATCHPaths = '/todos/:todoId' | '/:todoId';
+export type DELETEPaths = '/todos/:todoId' | '/:todoId' | '/users/:userId' | '/:userId';
 
 // Union type of all valid paths
-export type ValidPaths = '/users' | '/users/:userId' | '/users/:userId' | '/users/:userId' | '/users' | '/' | '/:userId' | '/:userId' | '/:userId' | '/' | '/todos' | '/todos/:todoId' | '/todos' | '/todos/:todoId' | '/todos/:todoId' | '/todos/:todoId' | '/:todoId' | '/:todoId' | '/:todoId' | '/:todoId';
+export type ValidPaths = '/todos' | '/todos/:todoId' | '/todos' | '/todos/:todoId' | '/todos/:todoId' | '/todos/:todoId' | '/' | '/:todoId' | '/' | '/:todoId' | '/:todoId' | '/:todoId' | '/users' | '/users/:userId' | '/users/:userId' | '/users/:userId' | '/users' | '/:userId' | '/:userId' | '/:userId';
 
 export type PathParams<T extends ValidPaths> = T extends keyof PathParamMap 
   ? PathParamMap[T] 
   : never;
 
 interface PathParamMap {
-  '/users/:userId': { userId: string | number };
-  '/:userId': { userId: string | number };
   '/todos/:todoId': { todoId: string | number };
-  '/:todoId': { todoId: string | number }
+  '/:todoId': { todoId: string | number };
+  '/users/:userId': { userId: string | number };
+  '/:userId': { userId: string | number }
 }
 
 // Helper types to drive options/response from path
@@ -166,22 +166,22 @@ export interface GeneratedApiClient {
     ? [path: TPath, options: OptionsFor<'GET', TPath>]
     : [path: TPath, options?: Omit<ClientRequestOptions, 'params' | 'body'>]
   ): Promise<ResponseFor<'GET', TPath>>;
-  put<TPath extends PUTPaths>(...args: RequiresOptions<'PUT', TPath> extends true
-    ? [path: TPath, options: OptionsFor<'PUT', TPath>]
-    : [path: TPath, options?: Omit<ClientRequestOptions, 'params' | 'body'>]
-  ): Promise<ResponseFor<'PUT', TPath>>;
-  delete<TPath extends DELETEPaths>(...args: RequiresOptions<'DELETE', TPath> extends true
-    ? [path: TPath, options: OptionsFor<'DELETE', TPath>]
-    : [path: TPath, options?: Omit<ClientRequestOptions, 'params' | 'body'>]
-  ): Promise<ResponseFor<'DELETE', TPath>>;
   post<TPath extends POSTPaths>(...args: RequiresOptions<'POST', TPath> extends true
     ? [path: TPath, options: OptionsFor<'POST', TPath>]
     : [path: TPath, options?: Omit<ClientRequestOptions, 'params' | 'body'>]
   ): Promise<ResponseFor<'POST', TPath>>;
+  put<TPath extends PUTPaths>(...args: RequiresOptions<'PUT', TPath> extends true
+    ? [path: TPath, options: OptionsFor<'PUT', TPath>]
+    : [path: TPath, options?: Omit<ClientRequestOptions, 'params' | 'body'>]
+  ): Promise<ResponseFor<'PUT', TPath>>;
   patch<TPath extends PATCHPaths>(...args: RequiresOptions<'PATCH', TPath> extends true
     ? [path: TPath, options: OptionsFor<'PATCH', TPath>]
     : [path: TPath, options?: Omit<ClientRequestOptions, 'params' | 'body'>]
   ): Promise<ResponseFor<'PATCH', TPath>>;
+  delete<TPath extends DELETEPaths>(...args: RequiresOptions<'DELETE', TPath> extends true
+    ? [path: TPath, options: OptionsFor<'DELETE', TPath>]
+    : [path: TPath, options?: Omit<ClientRequestOptions, 'params' | 'body'>]
+  ): Promise<ResponseFor<'DELETE', TPath>>;
 }
 
 // Create the typed client
@@ -191,46 +191,35 @@ function createTypedClient(options: CreateClientOptions = {}): GeneratedApiClien
   const get: GeneratedApiClient["get"] = ((...args: any[]) => {
       const [path, options] = args as [any, any];
       switch (path) {
-      case '/users': return client.get(path, options) as Promise<ResponseFor<'GET', '/users'>>;
-      case '/users/:userId': return client.get(path, options) as Promise<ResponseFor<'GET', '/users/:userId'>>;
-      case '/': return client.get(path, options) as Promise<ResponseFor<'GET', '/'>>;
-      case '/:userId': return client.get(path, options) as Promise<ResponseFor<'GET', '/:userId'>>;
       case '/todos': return client.get(path, options) as Promise<ResponseFor<'GET', '/todos'>>;
       case '/todos/:todoId': return client.get(path, options) as Promise<ResponseFor<'GET', '/todos/:todoId'>>;
+      case '/': return client.get(path, options) as Promise<ResponseFor<'GET', '/'>>;
       case '/:todoId': return client.get(path, options) as Promise<ResponseFor<'GET', '/:todoId'>>;
+      case '/users': return client.get(path, options) as Promise<ResponseFor<'GET', '/users'>>;
+      case '/users/:userId': return client.get(path, options) as Promise<ResponseFor<'GET', '/users/:userId'>>;
+      case '/:userId': return client.get(path, options) as Promise<ResponseFor<'GET', '/:userId'>>;
         default: throw new Error(`Invalid path for GET: ${path}`);
-      }
-    }) as any;
-
-  const put: GeneratedApiClient["put"] = ((...args: any[]) => {
-      const [path, options] = args as [any, any];
-      switch (path) {
-      case '/users/:userId': return client.put(path, options) as Promise<ResponseFor<'PUT', '/users/:userId'>>;
-      case '/:userId': return client.put(path, options) as Promise<ResponseFor<'PUT', '/:userId'>>;
-      case '/todos/:todoId': return client.put(path, options) as Promise<ResponseFor<'PUT', '/todos/:todoId'>>;
-      case '/:todoId': return client.put(path, options) as Promise<ResponseFor<'PUT', '/:todoId'>>;
-        default: throw new Error(`Invalid path for PUT: ${path}`);
-      }
-    }) as any;
-
-  const del: GeneratedApiClient["delete"] = ((...args: any[]) => {
-      const [path, options] = args as [any, any];
-      switch (path) {
-      case '/users/:userId': return client.delete(path, options) as Promise<ResponseFor<'DELETE', '/users/:userId'>>;
-      case '/:userId': return client.delete(path, options) as Promise<ResponseFor<'DELETE', '/:userId'>>;
-      case '/todos/:todoId': return client.delete(path, options) as Promise<ResponseFor<'DELETE', '/todos/:todoId'>>;
-      case '/:todoId': return client.delete(path, options) as Promise<ResponseFor<'DELETE', '/:todoId'>>;
-        default: throw new Error(`Invalid path for DELETE: ${path}`);
       }
     }) as any;
 
   const post: GeneratedApiClient["post"] = ((...args: any[]) => {
       const [path, options] = args as [any, any];
       switch (path) {
-      case '/users': return client.post(path, options) as Promise<ResponseFor<'POST', '/users'>>;
-      case '/': return client.post(path, options) as Promise<ResponseFor<'POST', '/'>>;
       case '/todos': return client.post(path, options) as Promise<ResponseFor<'POST', '/todos'>>;
+      case '/': return client.post(path, options) as Promise<ResponseFor<'POST', '/'>>;
+      case '/users': return client.post(path, options) as Promise<ResponseFor<'POST', '/users'>>;
         default: throw new Error(`Invalid path for POST: ${path}`);
+      }
+    }) as any;
+
+  const put: GeneratedApiClient["put"] = ((...args: any[]) => {
+      const [path, options] = args as [any, any];
+      switch (path) {
+      case '/todos/:todoId': return client.put(path, options) as Promise<ResponseFor<'PUT', '/todos/:todoId'>>;
+      case '/:todoId': return client.put(path, options) as Promise<ResponseFor<'PUT', '/:todoId'>>;
+      case '/users/:userId': return client.put(path, options) as Promise<ResponseFor<'PUT', '/users/:userId'>>;
+      case '/:userId': return client.put(path, options) as Promise<ResponseFor<'PUT', '/:userId'>>;
+        default: throw new Error(`Invalid path for PUT: ${path}`);
       }
     }) as any;
 
@@ -243,12 +232,23 @@ function createTypedClient(options: CreateClientOptions = {}): GeneratedApiClien
       }
     }) as any;
 
+  const del: GeneratedApiClient["delete"] = ((...args: any[]) => {
+      const [path, options] = args as [any, any];
+      switch (path) {
+      case '/todos/:todoId': return client.delete(path, options) as Promise<ResponseFor<'DELETE', '/todos/:todoId'>>;
+      case '/:todoId': return client.delete(path, options) as Promise<ResponseFor<'DELETE', '/:todoId'>>;
+      case '/users/:userId': return client.delete(path, options) as Promise<ResponseFor<'DELETE', '/users/:userId'>>;
+      case '/:userId': return client.delete(path, options) as Promise<ResponseFor<'DELETE', '/:userId'>>;
+        default: throw new Error(`Invalid path for DELETE: ${path}`);
+      }
+    }) as any;
+
   return {
     get,
-    put,
-    delete: del,
     post,
-    patch
+    put,
+    patch,
+    delete: del
   } as GeneratedApiClient;
 }
 

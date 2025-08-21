@@ -17,9 +17,9 @@
   "packageManager": "pnpm@10.4.1",
   "dependencies": {
     "@reono-todo/api": "workspace:*",
-    "@reono/client": "^1.0.1",
-    "@reono/node-server": "^1.0.8",
-    "reono": "^1.0.5",
+    "@reono/client": "catalog:",
+    "@reono/node-server": "catalog:",
+    "reono": "^1.0.6",
     "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^3.0.5",
